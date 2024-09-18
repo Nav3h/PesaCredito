@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zyvorix Ventures - Sign Up</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/ZyvorixVenturesLogotrans.png" type="image/png">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Your Account</h2>
+        <form id="signupForm">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name" required>
+
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="last-name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p id="success-message" style="color:green; display:none;">Signup successful! You can now <a href="login.html">login here</a>.</p>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form from submitting the traditional way
+
+            // Capture form data
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Store the data in localStorage
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+
+            // Show success message and clear the form
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('signupForm').reset();
+        });
+    </script>
+</body>
+</html>

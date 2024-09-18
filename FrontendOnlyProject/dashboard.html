@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/ZyvorixVenturesLogotrans.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Including Chart.js -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Left side: Balance Display -->
+        <div class="left-side">
+            <h2>Balance</h2>
+            <p id="balance">$0.00</p> <!-- Balance will be updated dynamically based on the chart data -->
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="main-content">
+            <h1>Welcome to the User Dashboard</h1>
+            <p>You are successfully logged in as a user!</p>
+
+            <!-- Deposit Button -->
+            
+    <div class="button-container" style="display: flex; gap: 10px; position: absolute; top: 50px; right: 50px;">
+        <a href="deposit.html" class="deposit-btn">Deposit Funds</a>
+        <a href="withdrawal.html" class="withdraw-btn">Withdraw Funds</a>
+    </div>
+    
+
+            <!-- Investment and Worth Chart -->
+            <h2>Investment Amount vs Investment Worth</h2>
+            <canvas id="investmentWorthChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <style>
+        .dashboard-container {
+            display: flex;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+
+        .left-side {
+            flex: 1;
+            padding: 10px 20px;
+            margin-right: 20px;
+        }
+
+        .left-side h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .left-side p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .main-content {
+            flex: 3;
+            text-align: center;
+        }
+
+        .deposit-button {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+        }
+
+        .deposit-btn {
+            padding: 10px 20px;
+            background-color: #238de0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .deposit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+    
+    .deposit-btn {
+        padding: 10px 20px;
+        background-color: #238de0;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .deposit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .withdraw-btn {
+        padding: 10px 20px;
+        background-color: #e02424;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .withdraw-btn:hover {
+        background-color: #b31212;
+    }
+    </style>
+    
+
+    <script>
+        // Sample daily data for the Investment Amount and Worth
+        const labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
+        const investmentAmounts = [500, 600, 550, 700, 800, 750, 900];  // Amount invested each day
+        const roiPercentages = [5, 10, 7, 12, 15, 11, 18]; // ROI in percentages for each day
+
+        // Calculate the worth of the investment over time based on ROI
+        const investmentWorth = investmentAmounts.map((amount, index) => {
+            return amount * (1 + roiPercentages[index] / 100);
+        });
+
+        // Calculate total investment worth and update balance
+        function updateBalance() {
+            const totalWorth = investmentWorth[investmentWorth.length - 1]; // Show the latest worth as the balance
+            document.getElementById('balance').innerText = `$${totalWorth.toFixed(2)}`;
+        }
+
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Investment Amount ($)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    data: investmentAmounts,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Investment Worth ($)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    data: investmentWorth,
+                    yAxisID: 'y1',
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Investment Amount vs Investment Worth'
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Investment Amount ($)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false, // Only display grid lines for one axis
+                        },
+                        title: {
+                            display: true,
+                            text: 'Investment Worth ($)'
+                        }
+                    }
+                }
+            },
+            plugins: [{
+                afterUpdate: updateBalance  // Update balance whenever the chart is updated
+            }]
+        };
+
+        // Render the chart
+        const investmentWorthChart = new Chart(
+            document.getElementById('investmentWorthChart'),
+            config
+        );
+
+        // Initial balance update
+        updateBalance();
+    </script>
+</body>
+</html>

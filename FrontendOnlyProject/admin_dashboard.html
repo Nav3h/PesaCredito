@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Admin Dashboard</h1>
+        <h2>Deposit Requests</h2>
+
+        <!-- Table for showing deposit requests -->
+        <table class="deposit-requests">
+            <thead>
+                <tr>
+                    <th>Amount (USD)</th>
+                    <th>Method</th>
+                    <th>Wallet Address</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="depositRequestsTable">
+                <!-- Dynamic deposit requests will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .admin-container {
+            padding: 50px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        td {
+            font-size: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #238de0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <script>
+        // Function to load deposit requests from localStorage
+        function loadDepositRequests() {
+            const storedRequests = localStorage.getItem('depositRequests');
+            const depositRequests = storedRequests ? JSON.parse(storedRequests) : [
+                { amount: 5000, method: 'ERC-20 USDT', address: '0xC10446411b7DE848bCA2fCBFb35733113D3149c7', status: 'Submitted' },
+                { amount: 3200, method: 'SOL USDC', address: 'FJUKHVoeiGy21GmFc6TmwxbenLMuVmKBy6t9ssKUgcn3', status: 'Submitted' },
+                { amount: 4000, method: 'Polygon USDC', address: '0xC10446411b7DE848bCA2fCBFb35733113D3149c7', status: 'Submitted' }
+            ];
+
+            const tableBody = document.getElementById('depositRequestsTable');
+            tableBody.innerHTML = ''; // Clear the table
+
+            depositRequests.forEach((request, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>$${request.amount}</td>
+                    <td>${request.method}</td>
+                    <td>${request.address}</td>
+                    <td>${request.status}</td>
+                    <td><button onclick="markAsDeposited(${index})">Mark as Deposited</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to update the status of a deposit request and save it in localStorage
+        function markAsDeposited(index) {
+            const storedRequests = localStorage.getItem('depositRequests');
+            const depositRequests = storedRequests ? JSON.parse(storedRequests) : [];
+
+            depositRequests[index].status = 'Deposited';
+            localStorage.setItem('depositRequests', JSON.stringify(depositRequests));
+            loadDepositRequests(); // Reload the table after updating the status
+        }
+
+        // Load the table when the page loads
+        window.onload = loadDepositRequests;
+    </script>
+</body>
+</html>
