@@ -1,51 +1,43 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
 
 body {
     font-family: 'Hammersmith One', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
-    color: black;
-}
-
-h2 {
-    font-family: 'Hammersmith One', sans-serif;
-    font-weight: bold;
-    color: #000;
+    background-color: #0000FF; /* Set the entire page background to blue */
+    color: white; /* Text color should be white to contrast the blue background */
 }
 
 .container {
     text-align: center;
     padding: 50px;
-    background-color: #ffffff;
 }
 
 .logo-container img {
     max-width: 300px;
 }
 
-.button-container {
+.navbar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    flex-direction: column; /* Align buttons vertically */
+    gap: 10px; /* Add space between buttons */
 }
 
-.signup-btn, .login-btn {
-    width: 48%;
-    padding: 10px 20px;
-    text-align: center;
+.nav-btn {
     background-color: #238de0;
     color: white;
+    padding: 10px 20px;
     text-decoration: none;
     font-size: 18px;
     border-radius: 5px;
+    text-align: center;
+    width: 150px; /* Set width to make them uniform */
 }
 
-.signup-btn:hover, .login-btn:hover {
+.nav-btn:hover {
     background-color: #0056b3;
 }
 
@@ -53,51 +45,8 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
-    background-color: #ffffff;
-    color: black;
+    background-color: transparent;
+    color: white; /* Footer text color should contrast with blue background */
     text-align: center;
     padding: 10px 0;
-}
-
-.form-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.form-container label {
-    display: block;
-    margin-bottom: 5px;
-    color: black;
-}
-
-.form-container input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: black;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
 }

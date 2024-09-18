@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +14,13 @@
             <img src="images/ZyvorixVenturesLogotrans.png" alt="Zyvorix Ventures Logo">
         </div>
 
-        <!-- Signup and Login Buttons (side by side) -->
-        <div class="button-container">
-            <a href="signup.html" class="signup-btn">Sign Up</a>
-            <a href="login.html" class="login-btn">Login</a>
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <a href="#" class="nav-btn">Connect Wallet</a>
+            <a href="#" class="nav-btn">View Status</a>
+            <a href="#" class="nav-btn">Start KYC</a>
+            <a href="signup.html" class="nav-btn">Sign Up</a>
+            <a href="login.html" class="nav-btn">Login</a>
         </div>
     </div>
 
@@ -26,5 +28,30 @@
     <footer>
         <p>Zyvorix Ventures &copy; 2024</p>
     </footer>
+
+    <!-- JavaScript for wallet connection and button functionality -->
+    <script>
+        const walletConnected = localStorage.getItem('walletConnected') === 'true';
+
+        // On page load, check wallet status
+        window.onload = function() {
+            if (walletConnected) {
+                document.querySelector('.nav-btn[href="#"]').disabled = true;
+                document.querySelector('.nav-btn[href="#"]').innerText = "Wallet Connected";
+            } else {
+                document.querySelector('.nav-btn[href="#"]:nth-child(2)').disabled = true;
+                document.querySelector('.nav-btn[href="#"]:nth-child(3)').disabled = true;
+            }
+        };
+
+        // Wallet connect button
+        document.querySelector('.nav-btn[href="#"]').addEventListener('click', function() {
+            localStorage.setItem('walletConnected', 'true');
+            document.querySelector('.nav-btn[href="#"]').disabled = true;
+            document.querySelector('.nav-btn[href="#"]').innerText = "Wallet Connected";
+            document.querySelector('.nav-btn[href="#"]:nth-child(2)').disabled = false;
+            document.querySelector('.nav-btn[href="#"]:nth-child(3)').disabled = false;
+        });
+    </script>
 </body>
 </html>
